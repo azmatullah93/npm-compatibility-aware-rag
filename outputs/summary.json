@@ -1,0 +1,20 @@
+{
+  "bm25": {
+    "tasks": 36,
+    "seeds": 1,
+    "top1_accuracy": 0.4722,
+    "compatible_at1": 0.5,
+    "mrr_at3": 0.6481,
+    "recall_at3": 0.8333,
+    "mean_incompatible_at3": 1.5
+  },
+  "version_aware": {
+    "tasks": 36,
+    "seeds": 1,
+    "top1_accuracy": 0.8056,
+    "compatible_at1": 1,
+    "mrr_at3": 0.8843,
+    "recall_at3": 1,
+    "mean_incompatible_at3": 0
+  }
+}

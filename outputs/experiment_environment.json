@@ -1,0 +1,15 @@
+{
+  "student": "Azmat Ullah",
+  "registration": "26i-7841",
+  "python": "3.13.5",
+  "node": "v22.16.0",
+  "experiment_scope": "retrieval-only",
+  "document_count": 36,
+  "task_count": 36,
+  "migrations": 18,
+  "target_versions_are_exact": true,
+  "runs": 1,
+  "pipeline_complete": false,
+  "paper_full_baseline_reproduction": false,
+  "llm_execution_done": false
+}

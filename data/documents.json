@@ -1,0 +1,434 @@
+[
+  {
+    "id": "express-wildcard-old",
+    "api_id": "express-wildcard",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "Catch-all routing for all request paths can use app.get('/*', handler) in Express.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-wildcard-new",
+    "api_id": "express-wildcard",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 named wildcard matching uses app.get('/{*splat}', handler) to include the root path.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-optional-old",
+    "api_id": "express-optional",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "Express route path with optional extension can use '/:file.:ext?' in app.get.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-optional-new",
+    "api_id": "express-optional",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 route path optional extension should use '/:file{.:ext}' in app.get.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-del-old",
+    "api_id": "express-del",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "An Express application supports app.del('/item', handler) as an alias for DELETE registration.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-del-new",
+    "api_id": "express-del",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 removes app.del(); register DELETE handlers with app.delete('/item', handler).",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-reqparam-old",
+    "api_id": "express-reqparam",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "In Express 4 req.param('id') accesses an HTTP request parameter by its name.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-reqparam-new",
+    "api_id": "express-reqparam",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 removes req.param(); use req.params.id for route parameters.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-sendstatus-old",
+    "api_id": "express-sendstatus",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "Express 4 accepts res.send(204) to send a status-only response.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-sendstatus-new",
+    "api_id": "express-sendstatus",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 removes res.send(status); use res.sendStatus(204) for a status-only response.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-redirect-old",
+    "api_id": "express-redirect",
+    "package": "express",
+    "version": "4.21.2",
+    "valid_versions": [
+      "4.21.2"
+    ],
+    "text": "Express 4 supports res.redirect('/next', 301) with destination first.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "express-redirect-new",
+    "api_id": "express-redirect",
+    "package": "express",
+    "version": "5.1.0",
+    "valid_versions": [
+      "5.1.0"
+    ],
+    "text": "Express 5 uses res.redirect(301, '/next') with status before destination.",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-findcallback-old",
+    "api_id": "mongoose-findcallback",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 query functions support Model.findOne({email}, callback) and pass result to callback.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-findcallback-new",
+    "api_id": "mongoose-findcallback",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 no longer accepts query callbacks; use await Model.findOne({email}) or .then().",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-remove-old",
+    "api_id": "mongoose-remove",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 Model.remove(filter) is available for removing documents.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-remove-new",
+    "api_id": "mongoose-remove",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 removes Model.remove(); use Model.deleteOne(filter) or Model.deleteMany(filter).",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-update-old",
+    "api_id": "mongoose-update",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 exposes Model.update(filter, update) for updating documents.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-update-new",
+    "api_id": "mongoose-update",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 removes Model.update(); use Model.updateOne or Model.updateMany.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-objectid-old",
+    "api_id": "mongoose-objectid",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 permits mongoose.Types.ObjectId(hexString) without new.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-objectid-new",
+    "api_id": "mongoose-objectid",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 requires new mongoose.Types.ObjectId(hexString) when constructing an ObjectId.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-mapreduce-old",
+    "api_id": "mongoose-mapreduce",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 includes Model.mapReduce(options) for map-reduce operations.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-mapreduce-new",
+    "api_id": "mongoose-mapreduce",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 removes Model.mapReduce; use aggregation pipelines where applicable.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-querydefault-old",
+    "api_id": "mongoose-querydefault",
+    "package": "mongoose",
+    "version": "6.13.8",
+    "valid_versions": [
+      "6.13.8"
+    ],
+    "text": "Mongoose 6 uses strictQuery true by default and strips unknown filter properties.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "mongoose-querydefault-new",
+    "api_id": "mongoose-querydefault",
+    "package": "mongoose",
+    "version": "7.8.7",
+    "valid_versions": [
+      "7.8.7"
+    ],
+    "text": "Mongoose 7 uses strictQuery false by default and keeps unknown filter properties unless configured.",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-history-old",
+    "api_id": "router-history",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 uses useHistory() and history.push('/dashboard') for navigation.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-history-new",
+    "api_id": "router-history",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 replaces useHistory with useNavigate(); call navigate('/dashboard').",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-switch-old",
+    "api_id": "router-switch",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 wraps matching Route elements within a Switch component.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-switch-new",
+    "api_id": "router-switch",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 uses Routes instead of Switch for route matching.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-redirect-old",
+    "api_id": "router-redirect",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 uses the Redirect component to navigate the user.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-redirect-new",
+    "api_id": "router-redirect",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 replaces Redirect with the Navigate component for navigation.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-component-old",
+    "api_id": "router-component",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 uses Route component={Home} or render={...} patterns.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-component-new",
+    "api_id": "router-component",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 uses Route element={<Home />} instead of component or render props.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-routematch-old",
+    "api_id": "router-routematch",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 provides useRouteMatch to match a pathname with route information.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-routematch-new",
+    "api_id": "router-routematch",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 replaces useRouteMatch with useMatch for route matching.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-redirectstate-old",
+    "api_id": "router-redirectstate",
+    "package": "react-router-dom",
+    "version": "5.3.4",
+    "valid_versions": [
+      "5.3.4"
+    ],
+    "text": "React Router 5 can put state into Redirect to={{pathname:'/profile', state:{from:'login'}}}.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  },
+  {
+    "id": "router-redirectstate-new",
+    "api_id": "router-redirectstate",
+    "package": "react-router-dom",
+    "version": "6.30.1",
+    "valid_versions": [
+      "6.30.1"
+    ],
+    "text": "React Router 6 passes state as a separate prop on Navigate, e.g. <Navigate to='/profile' state={{from:'login'}} />.",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "provenance": "author-paraphrased from linked vendor migration guide"
+  }
+]

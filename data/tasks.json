@@ -1,0 +1,794 @@
+[
+  {
+    "id": "express-wildcard-task-old",
+    "api_id": "express-wildcard",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Create a catch-all route including root requests",
+    "correct_doc_id": "express-wildcard-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-wildcard-task-new",
+    "api_id": "express-wildcard",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Create a catch-all route including root requests",
+    "correct_doc_id": "express-wildcard-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-optional-task-old",
+    "api_id": "express-optional",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Define an image route with an optional extension",
+    "correct_doc_id": "express-optional-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-optional-task-new",
+    "api_id": "express-optional",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Define an image route with an optional extension",
+    "correct_doc_id": "express-optional-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-del-task-old",
+    "api_id": "express-del",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Register the DELETE HTTP handler for a resource",
+    "correct_doc_id": "express-del-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-del-task-new",
+    "api_id": "express-del",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Register the DELETE HTTP handler for a resource",
+    "correct_doc_id": "express-del-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-reqparam-task-old",
+    "api_id": "express-reqparam",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Read the id parameter provided in a route path",
+    "correct_doc_id": "express-reqparam-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-reqparam-task-new",
+    "api_id": "express-reqparam",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Read the id parameter provided in a route path",
+    "correct_doc_id": "express-reqparam-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-sendstatus-task-old",
+    "api_id": "express-sendstatus",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Send HTTP status 204 as the response",
+    "correct_doc_id": "express-sendstatus-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-sendstatus-task-new",
+    "api_id": "express-sendstatus",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Send HTTP status 204 as the response",
+    "correct_doc_id": "express-sendstatus-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-redirect-task-old",
+    "api_id": "express-redirect",
+    "package": "express",
+    "target_version": "4.21.2",
+    "query": "Redirect the client to the next URL with HTTP status 301",
+    "correct_doc_id": "express-redirect-old",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^4.21.2"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "4.21.2"
+        }
+      }
+    }
+  },
+  {
+    "id": "express-redirect-task-new",
+    "api_id": "express-redirect",
+    "package": "express",
+    "target_version": "5.1.0",
+    "query": "Redirect the client to the next URL with HTTP status 301",
+    "correct_doc_id": "express-redirect-new",
+    "source": "https://expressjs.com/en/guide/migrating-5/",
+    "package_json": {
+      "dependencies": {
+        "express": "^5.1.0"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/express": {
+          "version": "5.1.0"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-findcallback-task-old",
+    "api_id": "mongoose-findcallback",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Find a user record and handle completion of the database query",
+    "correct_doc_id": "mongoose-findcallback-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-findcallback-task-new",
+    "api_id": "mongoose-findcallback",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Find a user record and handle completion of the database query",
+    "correct_doc_id": "mongoose-findcallback-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-remove-task-old",
+    "api_id": "mongoose-remove",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Delete matching database records using the model",
+    "correct_doc_id": "mongoose-remove-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-remove-task-new",
+    "api_id": "mongoose-remove",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Delete matching database records using the model",
+    "correct_doc_id": "mongoose-remove-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-update-task-old",
+    "api_id": "mongoose-update",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Update matching documents using the model method",
+    "correct_doc_id": "mongoose-update-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-update-task-new",
+    "api_id": "mongoose-update",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Update matching documents using the model method",
+    "correct_doc_id": "mongoose-update-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-objectid-task-old",
+    "api_id": "mongoose-objectid",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Create a BSON ObjectId from its hexadecimal string",
+    "correct_doc_id": "mongoose-objectid-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-objectid-task-new",
+    "api_id": "mongoose-objectid",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Create a BSON ObjectId from its hexadecimal string",
+    "correct_doc_id": "mongoose-objectid-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-mapreduce-task-old",
+    "api_id": "mongoose-mapreduce",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Execute a map-reduce operation on a MongoDB model",
+    "correct_doc_id": "mongoose-mapreduce-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-mapreduce-task-new",
+    "api_id": "mongoose-mapreduce",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Execute a map-reduce operation on a MongoDB model",
+    "correct_doc_id": "mongoose-mapreduce-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-querydefault-task-old",
+    "api_id": "mongoose-querydefault",
+    "package": "mongoose",
+    "target_version": "6.13.8",
+    "query": "Configure whether unrecognized filter fields are stripped by default",
+    "correct_doc_id": "mongoose-querydefault-old",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^6.13.8"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "6.13.8"
+        }
+      }
+    }
+  },
+  {
+    "id": "mongoose-querydefault-task-new",
+    "api_id": "mongoose-querydefault",
+    "package": "mongoose",
+    "target_version": "7.8.7",
+    "query": "Configure whether unrecognized filter fields are stripped by default",
+    "correct_doc_id": "mongoose-querydefault-new",
+    "source": "https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html",
+    "package_json": {
+      "dependencies": {
+        "mongoose": "^7.8.7"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/mongoose": {
+          "version": "7.8.7"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-history-task-old",
+    "api_id": "router-history",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Navigate programmatically to dashboard after logging in",
+    "correct_doc_id": "router-history-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-history-task-new",
+    "api_id": "router-history",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Navigate programmatically to dashboard after logging in",
+    "correct_doc_id": "router-history-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-switch-task-old",
+    "api_id": "router-switch",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Render the first matching route in a route collection",
+    "correct_doc_id": "router-switch-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-switch-task-new",
+    "api_id": "router-switch",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Render the first matching route in a route collection",
+    "correct_doc_id": "router-switch-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-redirect-task-old",
+    "api_id": "router-redirect",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Redirect a user to the home page from a route component",
+    "correct_doc_id": "router-redirect-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-redirect-task-new",
+    "api_id": "router-redirect",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Redirect a user to the home page from a route component",
+    "correct_doc_id": "router-redirect-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-component-task-old",
+    "api_id": "router-component",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Define a route that renders a Home component",
+    "correct_doc_id": "router-component-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-component-task-new",
+    "api_id": "router-component",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Define a route that renders a Home component",
+    "correct_doc_id": "router-component-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-routematch-task-old",
+    "api_id": "router-routematch",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Match the current URL against a route pattern using a hook",
+    "correct_doc_id": "router-routematch-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-routematch-task-new",
+    "api_id": "router-routematch",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Match the current URL against a route pattern using a hook",
+    "correct_doc_id": "router-routematch-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-redirectstate-task-old",
+    "api_id": "router-redirectstate",
+    "package": "react-router-dom",
+    "target_version": "5.3.4",
+    "query": "Redirect to a profile screen while passing navigation state",
+    "correct_doc_id": "router-redirectstate-old",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^5.3.4"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "5.3.4"
+        }
+      }
+    }
+  },
+  {
+    "id": "router-redirectstate-task-new",
+    "api_id": "router-redirectstate",
+    "package": "react-router-dom",
+    "target_version": "6.30.1",
+    "query": "Redirect to a profile screen while passing navigation state",
+    "correct_doc_id": "router-redirectstate-new",
+    "source": "https://reactrouter.com/docs/en/v6/upgrading/v5",
+    "package_json": {
+      "dependencies": {
+        "react-router-dom": "^6.30.1"
+      }
+    },
+    "package_lock": {
+      "lockfileVersion": 3,
+      "packages": {
+        "node_modules/react-router-dom": {
+          "version": "6.30.1"
+        }
+      }
+    }
+  }
+]

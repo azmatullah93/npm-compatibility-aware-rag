@@ -1,0 +1,4 @@
+# Python >=3.10 (experiment ran on 3.13.5)
+numpy>=1.23
+scikit-learn>=1.2,<2
+matplotlib>=3.5

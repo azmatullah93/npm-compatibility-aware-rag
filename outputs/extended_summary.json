@@ -1,0 +1,42 @@
+{
+  "bm25": {
+    "tasks": 36,
+    "top1_hits": 17,
+    "top1_accuracy": 0.4722,
+    "compatible_top1_hits": 18,
+    "compatible_at1": 0.5,
+    "recall3": 0.8333,
+    "mrr3": 0.6481,
+    "avg_latency_ms": 0.0555
+  },
+  "bm25_version": {
+    "tasks": 36,
+    "top1_hits": 29,
+    "top1_accuracy": 0.8056,
+    "compatible_top1_hits": 36,
+    "compatible_at1": 1,
+    "recall3": 1,
+    "mrr3": 0.8843,
+    "avg_latency_ms": 0.0486
+  },
+  "lsa": {
+    "tasks": 36,
+    "top1_hits": 15,
+    "top1_accuracy": 0.4167,
+    "compatible_top1_hits": 18,
+    "compatible_at1": 0.5,
+    "recall3": 0.8333,
+    "mrr3": 0.6111,
+    "avg_latency_ms": 0.3666
+  },
+  "lsa_version": {
+    "tasks": 36,
+    "top1_hits": 28,
+    "top1_accuracy": 0.7778,
+    "compatible_top1_hits": 36,
+    "compatible_at1": 1,
+    "recall3": 1,
+    "mrr3": 0.875,
+    "avg_latency_ms": 0.3549
+  }
+}
