@@ -1,0 +1,58 @@
+[
+  {
+    "method_a": "bm25_unconstrained",
+    "method_b": "bm25_exact",
+    "paired_task_count": 42,
+    "top1_gain_count": 12,
+    "top1_loss_count": 2,
+    "difference_percentage_points": 23.81,
+    "bootstrap_95ci_pp": [
+      9.52,
+      38.1
+    ],
+    "exact_mcnemar_p": 0.012939,
+    "note": "Pilot constructed with paired version tasks and researcher-labeled ranges; not independent real-world generalization"
+  },
+  {
+    "method_a": "bm25_exact",
+    "method_b": "bm25_range",
+    "paired_task_count": 42,
+    "top1_gain_count": 2,
+    "top1_loss_count": 2,
+    "difference_percentage_points": 0,
+    "bootstrap_95ci_pp": [
+      -9.52,
+      9.52
+    ],
+    "exact_mcnemar_p": 1.0,
+    "note": "Pilot constructed with paired version tasks and researcher-labeled ranges; not independent real-world generalization"
+  },
+  {
+    "method_a": "lsa_unconstrained",
+    "method_b": "lsa_exact",
+    "paired_task_count": 42,
+    "top1_gain_count": 10,
+    "top1_loss_count": 1,
+    "difference_percentage_points": 21.43,
+    "bootstrap_95ci_pp": [
+      9.52,
+      33.33
+    ],
+    "exact_mcnemar_p": 0.011719,
+    "note": "Pilot constructed with paired version tasks and researcher-labeled ranges; not independent real-world generalization"
+  },
+  {
+    "method_a": "lsa_exact",
+    "method_b": "lsa_range",
+    "paired_task_count": 42,
+    "top1_gain_count": 2,
+    "top1_loss_count": 2,
+    "difference_percentage_points": 0,
+    "bootstrap_95ci_pp": [
+      -9.52,
+      9.52
+    ],
+    "exact_mcnemar_p": 1.0,
+    "note": "Pilot constructed with paired version tasks and researcher-labeled ranges; not independent real-world generalization"
+  }
+]

@@ -1,5 +1,29 @@
 # Compatibility-Aware Retrieval for Evolving npm APIs
 
+## Latest: Assignment #3 Preliminary Results and Methodology (2026-11-18)
+
+**Azmat Ullah, registration 26i-7841, i267841@isb.nu.edu.pk.**
+
+The newest milestone is in **[`milestone3/README.md`](milestone3/README.md)** and the updated manuscript is **[`paper/milestone3.pdf`](paper/milestone3.pdf)**. It expands the earlier pilot from 36 to **42 retrieval tasks** and adds API-applicability ranges, exact-versus-range filtering, six-method retrieval experiments, paired statistical analysis, a model-API adapter and an isolated npm execution runner. **Measured results are retrieval-only**. Full original DocPrompting reproduction and live LLM/npm execution remain incomplete, as the paper explicitly states.
+
+**Re-run the new experiments:**
+
+```bash
+python -m pip install -r requirements.txt
+python milestone3/build_extended_dataset.py
+python -m unittest discover -s tests -v
+python -m unittest discover -s milestone3 -p 'test_*.py' -v
+python milestone3/evaluate_stage3.py
+python milestone3/paired_analysis.py
+python milestone3/plot_stage3.py
+node milestone3/fixture_execution_selftest.cjs
+```
+
+The remainder below documents the **historical Assignment #2 submission**, not the newest milestone.
+
+---
+
+
 **Azmat Ullah | Registration 26i-7841 | Research Methodology | Assignment #2, first scheduled milestone**
 
 This repository contains an IEEE-style methodology manuscript, a working retrieval-stage pilot, the small controlled dataset, tests, and a prepared Node.js probe script. **It is a preliminary implementation, not a finished LLM code-generation system or a reproduction of DocPrompting's published benchmark scores.**

@@ -1,0 +1,128 @@
+{
+  "bm25_exact": {
+    "tasks": 42,
+    "top1_hits": 28,
+    "top1_accuracy": 0.6667,
+    "compatible_at1": 1,
+    "recall3": 0.9048,
+    "mrr3": 0.7738,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 26,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 2,
+        "abstentions": 0
+      }
+    }
+  },
+  "bm25_range": {
+    "tasks": 42,
+    "top1_hits": 28,
+    "top1_accuracy": 0.6667,
+    "compatible_at1": 1,
+    "recall3": 0.9286,
+    "mrr3": 0.7897,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 24,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 4,
+        "abstentions": 0
+      }
+    }
+  },
+  "bm25_unconstrained": {
+    "tasks": 42,
+    "top1_hits": 18,
+    "top1_accuracy": 0.4286,
+    "compatible_at1": 0.619,
+    "recall3": 0.8095,
+    "mrr3": 0.6111,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 14,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 4,
+        "abstentions": 0
+      }
+    }
+  },
+  "lsa_exact": {
+    "tasks": 42,
+    "top1_hits": 24,
+    "top1_accuracy": 0.5714,
+    "compatible_at1": 1,
+    "recall3": 0.9048,
+    "mrr3": 0.7222,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 23,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 1,
+        "abstentions": 0
+      }
+    }
+  },
+  "lsa_range": {
+    "tasks": 42,
+    "top1_hits": 24,
+    "top1_accuracy": 0.5714,
+    "compatible_at1": 1,
+    "recall3": 0.881,
+    "mrr3": 0.7103,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 21,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 3,
+        "abstentions": 0
+      }
+    }
+  },
+  "lsa_unconstrained": {
+    "tasks": 42,
+    "top1_hits": 15,
+    "top1_accuracy": 0.3571,
+    "compatible_at1": 0.5238,
+    "recall3": 0.7381,
+    "mrr3": 0.5357,
+    "abstentions": 0,
+    "breakdown": {
+      "breaking_change": {
+        "tasks": 36,
+        "top1_hits": 13,
+        "abstentions": 0
+      },
+      "stable_cross_version": {
+        "tasks": 6,
+        "top1_hits": 2,
+        "abstentions": 0
+      }
+    }
+  }
+}
