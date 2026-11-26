@@ -1,0 +1,79 @@
+{
+  "source": "locally emulated API signatures, NOT real npm packages",
+  "cases": [
+    {
+      "case": "express-4-old-wildcard",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "express-5-old-wildcard",
+      "author_defined_expected_success": false,
+      "actual_success": false,
+      "match": true
+    },
+    {
+      "case": "express-5-new-wildcard",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "express-4-delete-alias",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "express-5-delete-alias",
+      "author_defined_expected_success": false,
+      "actual_success": false,
+      "match": true
+    },
+    {
+      "case": "express-5-delete-method",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "mongoose-6-remove",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "mongoose-7-remove",
+      "author_defined_expected_success": false,
+      "actual_success": false,
+      "match": true
+    },
+    {
+      "case": "mongoose-7-deleteMany",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "mongoose-6-update",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    },
+    {
+      "case": "mongoose-7-update",
+      "author_defined_expected_success": false,
+      "actual_success": false,
+      "match": true
+    },
+    {
+      "case": "mongoose-7-updateOne",
+      "author_defined_expected_success": true,
+      "actual_success": true,
+      "match": true
+    }
+  ],
+  "pass": 12,
+  "total": 12
+}

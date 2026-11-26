@@ -19,7 +19,7 @@ for (const [pkg, version] of libraryVersions) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'npm-api-evolution-'));
   fs.writeFileSync(path.join(dir,'package.json'), JSON.stringify({private:true, name:'api-probe',version:'1.0.0'}));
   try {
-    cp.execFileSync('npm', ['install', '--no-audit', '--no-fund', '--ignore-scripts', `${pkg}@${version}`], {
+    cp.execFileSync(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['install', '--no-audit', '--no-fund', '--ignore-scripts', `${pkg}@${version}`], {
       cwd:dir, stdio:'pipe', timeout:120000, env:{...process.env, npm_config_update_notifier:'false'}
     });
     const lib = createRequire(path.join(dir,'package.json'))(pkg);

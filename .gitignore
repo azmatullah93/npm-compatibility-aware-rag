@@ -11,3 +11,8 @@ node_modules/
 .DS_Store
 _pdf_review/
 *.zip
+# Assignment 3 local data and untrusted model outputs
+milestone3/npm_workspaces/
+milestone3/generated_actual.jsonl
+milestone3/actual_execution_results.json
+milestone3/*.log
