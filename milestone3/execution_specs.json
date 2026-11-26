@@ -1,0 +1,22 @@
+{
+  "express-wildcard-task-new": {
+    "package": "express",
+    "version": "5.1.0",
+    "test_js": "const assert=require('node:assert/strict'); const express=require('express'); const setup=require('./solution.cjs'); const app=setup(express); assert.equal(typeof app,'function'); assert.ok(app.router.stack.some(layer=>layer.route && layer.route.methods.get && layer.route.path==='/{*splat}'), 'Expected Express 5 root-inclusive named wildcard route'); console.log('PASS express wildcard 5');"
+  },
+  "express-del-task-new": {
+    "package": "express",
+    "version": "5.1.0",
+    "test_js": "const assert=require('node:assert/strict'); const express=require('express'); const setup=require('./solution.cjs'); const app=setup(express); assert.equal(typeof app,'function'); assert.ok(app.router.stack.some(layer=>layer.route && layer.route.methods.delete && layer.route.path==='/item'), 'Expected DELETE /item route'); console.log('PASS express delete 5');"
+  },
+  "mongoose-remove-task-new": {
+    "package": "mongoose",
+    "version": "7.8.7",
+    "test_js": "const assert=require('node:assert/strict'); const mongoose=require('mongoose'); const setup=require('./solution.cjs'); const del=setup(mongoose); assert.equal(typeof del,'function'); const out=del({name:'sample'}); assert.equal(typeof out.then,'function'); console.log('PASS mongoose deleteOne or deleteMany interface');"
+  },
+  "mongoose-update-task-new": {
+    "package": "mongoose",
+    "version": "7.8.7",
+    "test_js": "const assert=require('node:assert/strict'); const mongoose=require('mongoose'); const setup=require('./solution.cjs'); const update=setup(mongoose); assert.equal(typeof update,'function'); const out=update({name:'old'},{name:'new'}); assert.equal(typeof out.then,'function'); console.log('PASS mongoose updateOne interface');"
+  }
+}
