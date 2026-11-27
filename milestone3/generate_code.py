@@ -16,8 +16,8 @@ from api_compatibility import rank_for_version
 
 # A small subset has executable specifications. The schema is deliberately fixed.
 EXEC_TASKS={
- 'express-wildcard-task-new': "Export a CommonJS function setup(express). It must create an Express app and register a GET catch-all route that also matches '/'. Return the app. Do not call listen().",
- 'express-del-task-new': "Export a CommonJS function setup(express). Create an Express app, register a DELETE route at '/item', and return the app. Do not call listen().",
+ 'express-wildcard-task-new': "Export a CommonJS function setup(express). It must create an Express app and register a GET catch-all route that also matches '/' and nested URLs. The handler must respond with HTTP 200. Return the app. Do not call listen().",
+ 'express-del-task-new': "Export a CommonJS function setup(express). Create an Express app, register a DELETE route at '/item' whose handler responds with HTTP 200, and return the app. Do not call listen().",
  'mongoose-remove-task-new': "Export a CommonJS function setup(mongoose). Create a unique Mongoose model called ExampleRecord with {name:String}, and return a function that deletes all matching records using a method supported by this installed version. Do not connect to any DB.",
  'mongoose-update-task-new': "Export a CommonJS function setup(mongoose). Create a unique Mongoose model called ExampleRecord with {name:String}, and return a function that updates exactly one matching record using a method supported by this installed version. Do not connect to any DB.",
 }
@@ -58,8 +58,13 @@ def run(args):
     with path.open('w') as f:
         for t in selected:
             ver=resolve_version(t['package'],t['package_json'],t['package_lock'])
-            hits=rank_for_version(model,t['query'],t['package'],ver,mode,k=3)
-            context=[d for d,_ in hits]
+            if mode=='none':
+                context=[]
+            elif mode=='oracle':
+                context=[next(d for d in docs if d['id']==t['correct_doc_id'])]
+            else:
+                hits=rank_for_version(model,t['query'],t['package'],ver,mode,k=3)
+                context=[d for d,_ in hits]
             prompt=prompt_for(t,context)
             row={'task_id':t['id'],'package':t['package'],'target_version':ver,'method':f'{model_name}_{mode}',
                  'retrieved_ids':[d['id'] for d in context], 'model':args.model,'prompt':prompt,
@@ -72,7 +77,7 @@ def run(args):
 if __name__=='__main__':
     p=argparse.ArgumentParser()
     p.add_argument('--retriever',choices=['bm25','lsa'],default='bm25')
-    p.add_argument('--compatibility',choices=['unconstrained','exact','range'],default='range')
+    p.add_argument('--compatibility',choices=['none','unconstrained','exact','range','oracle'],default='range')
     p.add_argument('--model',default='SET_MODEL_ID')
     p.add_argument('--api-url',default='https://api.openai.com/v1')
     p.add_argument('--limit',type=int,default=4)
