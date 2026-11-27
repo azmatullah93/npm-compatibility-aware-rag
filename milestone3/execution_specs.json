@@ -2,21 +2,21 @@
   "express-wildcard-task-new": {
     "package": "express",
     "version": "5.1.0",
-    "test_js": "const assert=require('node:assert/strict'); const express=require('express'); const setup=require('./solution.cjs'); const app=setup(express); assert.equal(typeof app,'function'); assert.ok(app.router.stack.some(layer=>layer.route && layer.route.methods.get && layer.route.path==='/{*splat}'), 'Expected Express 5 root-inclusive named wildcard route'); console.log('PASS express wildcard 5');"
+    "test_js": "const assert=require('node:assert/strict');const express=require('express');const app=require('./solution.cjs')(express);assert.equal(typeof app,'function');const route=app.router.stack.find(l=>l.route&&l.route.path==='/{*splat}'&&l.route.methods.get);assert.ok(route,'Missing named root-inclusive wildcard route');(async()=>{const server=app.listen(0,'127.0.0.1');try{for(const pathname of ['/','/nested/resource']){const r=await fetch(`http://127.0.0.1:${server.address().port}${pathname}`);assert.equal(r.status,200,pathname);}}finally{server.close();}console.log('PASS Express 5 route handles root and nested paths');})().catch(e=>{console.error(e);process.exitCode=1});"
   },
   "express-del-task-new": {
     "package": "express",
     "version": "5.1.0",
-    "test_js": "const assert=require('node:assert/strict'); const express=require('express'); const setup=require('./solution.cjs'); const app=setup(express); assert.equal(typeof app,'function'); assert.ok(app.router.stack.some(layer=>layer.route && layer.route.methods.delete && layer.route.path==='/item'), 'Expected DELETE /item route'); console.log('PASS express delete 5');"
+    "test_js": "const assert=require('node:assert/strict');const express=require('express');const app=require('./solution.cjs')(express);assert.equal(typeof app,'function');const route=app.router.stack.find(l=>l.route&&l.route.path==='/item'&&l.route.methods.delete);assert.ok(route,'Missing DELETE /item');(async()=>{const server=app.listen(0,'127.0.0.1');try{const r=await fetch(`http://127.0.0.1:${server.address().port}/item`,{method:'DELETE'});assert.equal(r.status,200);}finally{server.close();}console.log('PASS Express 5 DELETE endpoint');})().catch(e=>{console.error(e);process.exitCode=1});"
   },
   "mongoose-remove-task-new": {
     "package": "mongoose",
     "version": "7.8.7",
-    "test_js": "const assert=require('node:assert/strict'); const mongoose=require('mongoose'); const setup=require('./solution.cjs'); const del=setup(mongoose); assert.equal(typeof del,'function'); const out=del({name:'sample'}); assert.equal(typeof out.then,'function'); console.log('PASS mongoose deleteOne or deleteMany interface');"
+    "test_js": "const assert=require('node:assert/strict');const mongoose=require('mongoose');const del=require('./solution.cjs')(mongoose);assert.equal(typeof del,'function');const Model=mongoose.model('ExampleRecord');assert.equal(typeof Model.deleteMany,'function');let called=false;Model.deleteMany=function(filter){assert.deepEqual(filter,{name:'sample'});called=true;return Promise.resolve({deletedCount:1})};(async()=>{await del({name:'sample'});assert.ok(called,'Function must call actual Mongoose Model.deleteMany API');console.log('PASS Mongoose 7 deleteMany API call');})().catch(e=>{console.error(e);process.exitCode=1});"
   },
   "mongoose-update-task-new": {
     "package": "mongoose",
     "version": "7.8.7",
-    "test_js": "const assert=require('node:assert/strict'); const mongoose=require('mongoose'); const setup=require('./solution.cjs'); const update=setup(mongoose); assert.equal(typeof update,'function'); const out=update({name:'old'},{name:'new'}); assert.equal(typeof out.then,'function'); console.log('PASS mongoose updateOne interface');"
+    "test_js": "const assert=require('node:assert/strict');const mongoose=require('mongoose');const update=require('./solution.cjs')(mongoose);assert.equal(typeof update,'function');const Model=mongoose.model('ExampleRecord');assert.equal(typeof Model.updateOne,'function');let called=false;Model.updateOne=function(filter,change){assert.deepEqual(filter,{name:'old'});assert.ok(JSON.stringify(change)===JSON.stringify({name:'new'})||JSON.stringify(change)===JSON.stringify({$set:{name:'new'}}),'Expected a valid single-record name update');called=true;return Promise.resolve({matchedCount:1})};(async()=>{await update({name:'old'},{name:'new'});assert.ok(called,'Function must call Mongoose Model.updateOne API');console.log('PASS Mongoose 7 updateOne API call');})().catch(e=>{console.error(e);process.exitCode=1});"
   }
 }

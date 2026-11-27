@@ -1,0 +1,56 @@
+name: Verify real npm version behavior
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/npm-real-api-probes.yml'
+      - 'execution/npm_version_probes.cjs'
+      - 'execution/check_real_probes.cjs'
+      - 'execution/test_probe_checker.cjs'
+      - 'milestone3/execution_specs.json'
+      - 'milestone3/run_generated_code.cjs'
+  push:
+    branches:
+      - 'research/real-npm-**'
+    paths:
+      - '.github/workflows/npm-real-api-probes.yml'
+      - 'execution/**'
+      - 'milestone3/execution_specs.json'
+      - 'milestone3/run_generated_code.cjs'
+
+permissions:
+  contents: read
+
+jobs:
+  real-package-probes:
+    name: Pinned Express and Mongoose probes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Show environment
+        run: |
+          node --version
+          npm --version
+      - name: Verify per-trial staging isolation (no generated code executed)
+        run: node milestone3/test_runner_isolation.cjs
+      - name: Verify documented probe checker logic (synthetic unit tests)
+        run: node execution/test_probe_checker.cjs
+      - name: Install real npm releases and record API behavior
+        run: node execution/npm_version_probes.cjs
+      - name: Validate release-specific expectations
+        run: node execution/check_real_probes.cjs
+      - name: Preserve raw observations even if assertions fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-npm-api-version-probes
+          path: |
+            outputs/npm_version_probe_results.json
+            outputs/npm_version_probe_environment.json
+            outputs/npm_probe_locks/*.json
+          if-no-files-found: warn
