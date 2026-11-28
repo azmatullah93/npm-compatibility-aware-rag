@@ -136,3 +136,19 @@ During the first Gemini-generated Express 5.1.0 trial, the researcher observed a
 Both Express task specifications now await `once(server, 'listening')`, verify the assigned port, and bound localhost HTTP requests to 5 seconds. The trusted regression check `node milestone3/test_http_spec_contract.cjs` verifies source ordering and native HTTP readiness, but **does not run a model-generated solution**.
 
 After pulling this fix, rerun the **unchanged existing** `milestone3/generated_actual.jsonl` through `--run` (and `--prepare` only if dependencies have gone missing). Record success or failure solely from the fixed harness results. Keep the earlier infrastructure/test failures out of generated-code correctness statistics.
+
+## Pilot20 results and CommonJS export-format sensitivity (2026-11-28)
+
+The researcher completed a genuine **20-generation / 20-Docker-execution pilot** with `gemini-3.5-flash`, four fixed tasks, one response per task per condition, and real pinned npm packages. The original STRICT output contract required `require('./solution.cjs')` to be directly callable. Reported strict successes: no retrieval **3/4**, unfiltered BM25 **4/4**, exact-version BM25 **4/4**, API-range-aware BM25 **3/4**, oracle **3/4** (**17/20** pooled). These are exploratory pilot outcomes, **not** conference-level comparative evidence. The exact per-trial outputs are local, ignored under `milestone3/npm_workspaces/pilot20/`; they were user-run and are not independently reproduced in CI.
+
+All three failed trials were for the Express 5 wildcard task. The no-documentation code registered an invalid `'*'` wildcard, a true API incompatibility. Range and oracle solutions used the correct `'/{*splat}'` Express 5 path, but exported `module.exports = { setup }` rather than a directly callable function. Both CommonJS forms expose `setup`, but the original strict test only accepts `module.exports = setup`. A previous, separately generated range solution passed the strict test with the same prompt and retrieved documents; there was generation variability despite requesting temperature zero.
+
+**Preserve the 17/20 strict results.** An opt-in **sensitivity analysis**, not a retroactive replacement of the primary experiment, can accept either `module.exports = setup` or `module.exports = { setup }`, with no edits to model-generated source. It changes only the trusted test harness:
+
+```bash
+node milestone3/test_export_contract.cjs
+node milestone3/run_generated_code.cjs --generated milestone3/npm_workspaces/pilot20/all_generated.jsonl --run --accept-named-export --output milestone3/npm_workspaces/pilot20/results_named_export.json
+python milestone3/summarize_execution.py milestone3/npm_workspaces/pilot20/results_named_export.json
+```
+
+The alternate mode labels each result with `export_contract: "direct_or_named_setup"`; strict mode uses `"direct_only"`. Keep output filenames distinct. Docker must be running and the pinned npm dependencies already prepared. Do **not** claim any changed success rate until these Docker trials have actually been executed. A future preregistered benchmark should specify an unambiguous export contract and report separate rates for API selection, interface format, and full behavioral correctness. Include old and new package versions, verified docs, repeated generations, and additional models.
