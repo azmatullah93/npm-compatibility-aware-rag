@@ -128,3 +128,11 @@ We reimplemented the BM25 scoring component used by DocPrompting, but **not** it
 ## Repository and submission
 
 Keep these files in the existing project repository: https://github.com/azmatullah93/npm-compatibility-aware-rag. Include `milestone3/`, updated `requirements.txt`, and both `paper/milestone3.tex` and `paper/milestone3.pdf`. Upload the updated research **PDF** to Google Classroom. The repository link is the final line of the abstract.
+
+## Express evaluation harness fix (2026-11-28)
+
+During the first Gemini-generated Express 5.1.0 trial, the researcher observed an initial Docker daemon connection failure, then a `DOCKER_TIMEOUT`, then a trusted manual Docker diagnostic failed with `TypeError: Cannot read properties of null (reading 'port')`. The latter error came from **the test harness** calling `server.address().port` immediately after `app.listen()`, before the asynchronous `'listening'` event. This is **not an LLM failure** and neither trial is a valid Pass@1 observation.
+
+Both Express task specifications now await `once(server, 'listening')`, verify the assigned port, and bound localhost HTTP requests to 5 seconds. The trusted regression check `node milestone3/test_http_spec_contract.cjs` verifies source ordering and native HTTP readiness, but **does not run a model-generated solution**.
+
+After pulling this fix, rerun the **unchanged existing** `milestone3/generated_actual.jsonl` through `--run` (and `--prepare` only if dependencies have gone missing). Record success or failure solely from the fixed harness results. Keep the earlier infrastructure/test failures out of generated-code correctness statistics.
