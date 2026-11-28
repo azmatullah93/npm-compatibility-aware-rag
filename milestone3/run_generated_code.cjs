@@ -10,6 +10,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const cp = require('node:child_process');
 const crypto = require('node:crypto');
+const {acceptNamedSetupExport} = require('./export_contract.cjs');
 const root = path.resolve(__dirname, '..');
 const specs = JSON.parse(fs.readFileSync(path.join(__dirname, 'execution_specs.json'), 'utf8'));
 const args = process.argv.slice(2);
@@ -29,6 +30,8 @@ if ([has('--stage'),has('--prepare'),has('--run')].filter(Boolean).length !== 1)
   throw Error('Choose exactly one mode: --stage, --prepare, or --run');
 }
 const mode = has('--stage') ? 'stage' : has('--prepare') ? 'prepare' : 'run';
+// Opt-in, separately reported diagnostic: leave strict grading unchanged by default.
+const acceptNamedExport = has('--accept-named-export');
 const outputFile = path.resolve(opt('--output', path.join(__dirname, 'actual_execution_results.json')));
 const rows = fs.readFileSync(path.resolve(input), 'utf8').split(/\r?\n/).filter(Boolean).map(JSON.parse);
 const output = [];
@@ -42,7 +45,8 @@ function evaluateRow(row, index) {
     throw Error(`Package/version mismatch for ${row.task_id}`);
   }
   const meta = {trial: index,task_id: row.task_id,package: spec.package,
-    target_version: spec.version,method: row.method,model: row.model};
+    target_version: spec.version,method: row.method,model: row.model,
+    export_contract: acceptNamedExport ? 'direct_or_named_setup' : 'direct_only'};
   if (typeof row.code !== 'string' || !row.code.trim()) return {...meta,status:'NO_GENERATED_CODE'};
 
   const packageKey = safeName(`${spec.package}-${spec.version}`);
@@ -52,7 +56,8 @@ function evaluateRow(row, index) {
   const work = path.join(pkgdir, 'runs', trialKey);
   fs.mkdirSync(work, {recursive:true});
   fs.writeFileSync(path.join(work,'solution.cjs'),row.code);
-  fs.writeFileSync(path.join(work,'test.cjs'),spec.test_js+'\n');
+  fs.writeFileSync(path.join(work,'test.cjs'),
+    (acceptNamedExport ? acceptNamedSetupExport(spec.test_js) : spec.test_js)+'\n');
   const codeHash=sha256(row.code);
   const metaWithFile={...meta,code_sha256:codeHash};
 
