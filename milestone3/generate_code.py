@@ -62,12 +62,54 @@ def prompt_for(task,docs):
        '\n\n'.join(f"Document {i+1}, labeled {d['version']}: {d['text']}" for i,d in enumerate(docs))+
        "\n\nReturn only the JavaScript source file without Markdown fences. Export a setup function as described. Do not execute anything at module import time.")
 
+def describe_quota_error(error):
+    """Summarize only safe, relevant Gemini quota fields; never echo a key."""
+    def limited(value):
+        import re
+        return re.sub(r'[^a-zA-Z0-9_.:/-]', '', str(value))[:140]
+
+    lines = [
+        'HTTP 429: Gemini rejected the request due to a rate limit or quota.',
+        'Your completed JSONL responses were saved. Resume with --resume after the quota permits requests.',
+        'See https://aistudio.google.com/rate-limit for project-specific RPM/TPM/RPD limits.'
+    ]
+    retry = error.headers.get('Retry-After') if error.headers else None
+    if retry:
+        lines.append('Retry-After header: ' + limited(retry))
+    try:
+        body = json.loads(error.read(32768).decode('utf-8'))
+        details = (body.get('error') or {}).get('details') or []
+        for detail in details:
+            if not isinstance(detail,dict):
+                continue
+            if detail.get('@type','').endswith('QuotaFailure'):
+                for violation in detail.get('violations',[])[:8]:
+                    quota_id = violation.get('quotaId')
+                    metric = violation.get('quotaMetric')
+                    if quota_id:
+                        lines.append('Quota ID: ' + limited(quota_id))
+                    if metric:
+                        lines.append('Quota metric: ' + limited(metric))
+            elif detail.get('@type','').endswith('RetryInfo'):
+                delay = detail.get('retryDelay')
+                if delay:
+                    lines.append('Provider suggested retry delay: ' + limited(delay))
+    except (OSError,ValueError,UnicodeError,AttributeError,TypeError):
+        pass
+    return '\n'.join(lines)
+
+
 def openai_chat(prompt,model,url,key):
     data=json.dumps({'model':model,'messages':[{'role':'user','content':prompt}], 'temperature':0}).encode()
     req=urllib.request.Request(url.rstrip('/')+'/chat/completions',data=data,
       headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'},method='POST')
-    with urllib.request.urlopen(req,timeout=90) as resp:
-        body=json.load(resp)
+    try:
+        with urllib.request.urlopen(req,timeout=90) as resp:
+            body=json.load(resp)
+    except urllib.error.HTTPError as error:
+        if error.code == 429:
+            raise SystemExit(describe_quota_error(error)) from None
+        raise
     result=body['choices'][0]['message']['content']
     if not isinstance(result,str) or not result.strip():raise ValueError('Empty response')
     s=result.strip()
