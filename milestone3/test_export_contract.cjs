@@ -28,7 +28,7 @@ const compatible = candidate => {
 };
 const setup = () => 'OK';
 assert.equal(strict(setup),'OK');
-assert.throws(()=>strict({setup}),TypeError);
+assert.throws(()=>strict({setup}),/is not a function/);
 assert.equal(compatible(setup),'OK');
 assert.equal(compatible({setup}),'OK');
 assert.throws(()=>compatible({bad:'wrong'}),/Expected a directly exported function or a named setup function/);
