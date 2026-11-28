@@ -10,6 +10,7 @@ From the repository root in Git Bash on Windows:
 git pull --ff-only origin research/real-npm-probes-and-llm-runner-2026-11-27
 python -m unittest discover -s tests -v
 python -m unittest discover -s milestone3 -p "test_*.py" -v
+python -m unittest discover -s milestone4 -p "test_*.py" -v
 node --check milestone4/build_reference_trials.cjs
 node --check milestone3/run_generated_code.cjs
 node milestone3/test_export_contract.cjs
@@ -35,15 +36,15 @@ export OPENAI_API_KEY
 mkdir -p milestone3/npm_workspaces/cross_version12
 for mode in none unconstrained exact range oracle; do
   echo "Generating condition: $mode"
-  python milestone3/generate_code.py --suite cross_version12 --model gemini-3.5-flash --api-url https://generativelanguage.googleapis.com/v1beta/openai --retriever bm25 --compatibility "$mode" --output "milestone3/npm_workspaces/cross_version12/${mode}.jsonl" || break
+  python milestone3/generate_code.py --suite cross_version12 --model gemini-3.5-flash --api-url https://generativelanguage.googleapis.com/v1beta/openai --retriever bm25 --compatibility "$mode" --resume --output "milestone3/npm_workspaces/cross_version12/${mode}.jsonl" || break
 done
 ```
 
-Free-tier quota may interrupt a batch. Stop on an API error. Check that each method has 12 valid JSONL lines before combining; **never** concatenate partial data and then call it a complete experiment. Subsequent retry attempts should be recorded as extra attempts, not quietly substituted.
+Free-tier quota may interrupt a batch. Stop on an API error. Each finished response is flushed to disk. The new \`--resume\` flag checks that the saved tasks, model, retrieval setting and prompts are an exact prefix and appends only missing generations. Run the **same command** after the quota clears; do not alter the model or prompt configuration during a partial run. Without \`--resume\`, an existing file is protected from overwrites by default. \`--overwrite\` is an explicit destructive option and must not be used for primary research results.
 
 ```bash
 wc -l milestone3/npm_workspaces/cross_version12/{none,unconstrained,exact,range,oracle}.jsonl
-cat milestone3/npm_workspaces/cross_version12/{none,unconstrained,exact,range,oracle}.jsonl > milestone3/npm_workspaces/cross_version12/all_generated.jsonl
+python milestone4/validate_generated.py --directory milestone3/npm_workspaces/cross_version12 --model gemini-3.5-flash
 ```
 
 ## C. Execute unchanged model outputs, then summarize
