@@ -1,6 +1,6 @@
 # Cross-version 12-task expansion: experiment protocol
 
-**Status:** Preliminary protocol and code fixtures prepared on 2026-11-28, after the four-task exploratory pilot. **No cross_version12 LLM generation or Docker results have been observed yet.** Treat this as a prospective small benchmark pilot, not as a registered complete conference evaluation.
+**Status:** This protocol and frozen twelve-task suite were established before the expanded cross-version Gemini run on 2026-11-28. **Two of five generation conditions have since been completed and evaluated (24/60 trials); the five-condition experiment remains incomplete.** Exploratory observations and the independent pinned-release checks are documented separately in [EXPLORATORY_FINDINGS_2026-11-28.md](EXPLORATORY_FINDINGS_2026-11-28.md). Treat this as a small controlled pilot, not a registered complete conference evaluation.
 
 ## Research question
 
