@@ -4,6 +4,7 @@ Never fabricates model output. --dry-run writes only prompts, not solutions.
 The API key is read from the environment; it is never persisted in outputs.
 """
 import argparse,json,os,sys,urllib.request,urllib.error
+from datetime import datetime, timezone
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parent
@@ -73,7 +74,13 @@ def openai_chat(prompt,model,url,key):
     if s.startswith('```'):
         parts=s.split('```')
         s='\n'.join(parts[1].splitlines()[1:] if parts[1].splitlines()[0].strip() in ('js','javascript') else parts[1].splitlines())
-    return s
+    return s, {'provider_response_id':body.get('id'),
+               'provider_reported_model':body.get('model'),
+               'provider_created_epoch':body.get('created'),
+               'provider_usage':body.get('usage'),
+               'finish_reason':body['choices'][0].get('finish_reason'),
+               'raw_response_content':result,
+               'received_at_utc':datetime.now(timezone.utc).isoformat()}
 
 def run(args):
     tasks=json.loads((HERE/'tasks.json').read_text())
@@ -108,7 +115,7 @@ def run(args):
                  'provider':'prompt_only' if args.dry_run else 'openai_compatible_chat_api',
                  'suite':args.suite, 'temperature_requested':0}
             if not args.dry_run:
-                row['code']=openai_chat(prompt,args.model,args.api_url,os.environ['OPENAI_API_KEY'])
+                row['code'],row['generation_response']=openai_chat(prompt,args.model,args.api_url,os.environ['OPENAI_API_KEY'])
             f.write(json.dumps(row)+'\n')
     print(f"Wrote {len(selected)} {'prompts only' if args.dry_run else 'genuine API responses'} to {path}")
 
