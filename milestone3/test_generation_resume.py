@@ -118,5 +118,23 @@ class GenerationResumeTests(unittest.TestCase):
         self.assertNotIn('NEVER_ECHO_THIS_SECRET',explanation)
 
 
+    def test_http_403_project_access_denial_preserves_credentials(self):
+        body={'error':{'code':403,'status':'PERMISSION_DENIED',
+                       'message':'Your project has been denied access. Please contact support.'}}
+        error=HTTPError('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+                        403,'Forbidden',{},
+                        io.BytesIO(json.dumps(body).encode('utf-8')))
+        with patch.object(generate_code.urllib.request,'urlopen',side_effect=error) as mock:
+            with self.assertRaises(SystemExit) as raised:
+                generate_code.openai_chat('PROMPT','TEST_MODEL_ONLY',
+                    'https://generativelanguage.googleapis.com/v1beta/openai','DO_NOT_PRINT_THIS_KEY')
+        self.assertEqual(mock.call_count,1)
+        message=str(raised.exception)
+        self.assertIn('HTTP 403',message)
+        self.assertIn('denied this project access',message)
+        self.assertNotIn('DO_NOT_PRINT_THIS_KEY',message)
+        self.assertIn('\\n',message)
+
+
 if __name__ == '__main__':
     unittest.main()
