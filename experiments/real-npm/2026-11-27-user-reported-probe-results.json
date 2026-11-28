@@ -1,0 +1,62 @@
+[
+  {
+    "pkg": "express",
+    "version": "4.21.2",
+    "probe": "app.del exists",
+    "result": true
+  },
+  {
+    "pkg": "express",
+    "version": "4.21.2",
+    "probe": "unnamed wildcard route accepted",
+    "result": true
+  },
+  {
+    "pkg": "express",
+    "version": "5.1.0",
+    "probe": "app.del exists",
+    "result": false
+  },
+  {
+    "pkg": "express",
+    "version": "5.1.0",
+    "probe": "unnamed wildcard route accepted",
+    "result": false
+  },
+  {
+    "pkg": "mongoose",
+    "version": "6.13.8",
+    "probe": "Model.remove exists",
+    "result": true
+  },
+  {
+    "pkg": "mongoose",
+    "version": "6.13.8",
+    "probe": "Model.update exists",
+    "result": true
+  },
+  {
+    "pkg": "mongoose",
+    "version": "6.13.8",
+    "probe": "ObjectId without new works",
+    "result": true
+  },
+  {
+    "pkg": "mongoose",
+    "version": "7.8.7",
+    "probe": "Model.remove exists",
+    "result": false
+  },
+  {
+    "pkg": "mongoose",
+    "version": "7.8.7",
+    "probe": "Model.update exists",
+    "result": false
+  },
+  {
+    "pkg": "mongoose",
+    "version": "7.8.7",
+    "probe": "ObjectId without new works",
+    "result": false
+  }
+]

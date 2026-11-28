@@ -76,6 +76,51 @@ The result would be saved in `milestone3/actual_execution_results.json`. **Those
 
 Alternatively, the existing `node execution/npm_version_probes.cjs` checks selected author-specified API differences after installing exact Express and Mongoose versions; these are **not model-generated solutions**.
 
+## Next-stage real npm validation and end-to-end experiment setup (2026-11-27)
+
+An added [GitHub Actions workflow](../.github/workflows/npm-real-api-probes.yml) can download and load **real published releases** of Express 4.21.2 / 5.1.0 and Mongoose 6.13.8 / 7.8.7. It runs the actual probes, checks eight documented behavior expectations, and uploads the raw JSON observations, environment metadata, and dependency lockfiles. The workflow only tests trusted probe code; **it never runs LLM-generated programs on the GitHub runner**.
+
+* [Actions workflow](https://github.com/azmatullah93/npm-compatibility-aware-rag/actions/workflows/npm-real-api-probes.yml)
+* Local alternative on an npm-enabled machine:
+
+```bash
+node execution/npm_version_probes.cjs
+node execution/check_real_probes.cjs
+```
+
+The existing 12 Node checks are still **emulations**, not evidence of real package execution. The new `execution/test_probe_checker.cjs` is a checker unit test with synthetic inputs, also not real package evidence. Treat the GitHub Actions run as real only after verifying its result and archived observations. Passing the eight probes validates selected API changes, **not an LLM-generated-code success rate**.
+
+The code-generation harness has also been tightened:
+
+* `--stage` saves candidate code and per-task tests into **separate directories**, but never executes it.
+* `--prepare` installs packages with exact versions and scripts disabled.
+* `--run` evaluates each candidate within Docker using read-only mounts, no outbound network, bounded CPU/memory, and no secrets. This is for a disposable VM, not a security guarantee.
+* `milestone3/test_runner_isolation.cjs` checks that two variants of the same task cannot overwrite one another.
+* Express generation tests now send real HTTP requests to a listening app in the container. Mongoose tests use the installed library but spy on the database-facing method calls to avoid requiring a live MongoDB; they therefore **do not test database persistence**.
+
+Prepare one generation output per condition, using a *single* fixed model and matching tasks:
+
+```bash
+# These generate prompts only (no LLM API call); remove --dry-run for actual outputs.
+python milestone3/generate_code.py --compatibility none --dry-run --output /tmp/no_context.jsonl
+python milestone3/generate_code.py --compatibility unconstrained --dry-run --output /tmp/unconstrained.jsonl
+python milestone3/generate_code.py --compatibility exact --dry-run --output /tmp/exact.jsonl
+python milestone3/generate_code.py --compatibility range --dry-run --output /tmp/range.jsonl
+python milestone3/generate_code.py --compatibility oracle --dry-run --output /tmp/oracle.jsonl
+```
+
+For **actual generated code**, provide a supported model ID and `OPENAI_API_KEY` in your local environment, remove `--dry-run`, and use distinct output files. Combine these genuine JSONL results (e.g. shell `cat` or Windows PowerShell `Get-Content`) into one file. Then:
+
+```bash
+node milestone3/test_runner_isolation.cjs
+node milestone3/run_generated_code.cjs --generated REAL_MODEL_OUTPUT.jsonl --stage
+node milestone3/run_generated_code.cjs --generated REAL_MODEL_OUTPUT.jsonl --prepare
+node milestone3/run_generated_code.cjs --generated REAL_MODEL_OUTPUT.jsonl --run
+python milestone3/summarize_execution.py milestone3/actual_execution_results.json
+```
+
+The summarizer **refuses to calculate Pass@1** when trials are staged, missing, affected by installation errors, or have different task coverage across retrieval methods. Do not call a synthetic, prompt-only, or staged run an LLM execution experiment. A real-paper evaluation additionally needs multiple models, verified task fixtures, and wider npm package coverage.
+
 ## Baseline reproduction status
 
 We reimplemented the BM25 scoring component used by DocPrompting, but **not** its official Elasticsearch/tldr pipeline or original generation benchmark scores. See [`BASELINE_REPRODUCTION.md`](../BASELINE_REPRODUCTION.md). Reproducing the published baseline remains required by the instructor's full rubric. The official source is https://github.com/shuyanzhou/docprompting.
@@ -83,3 +128,27 @@ We reimplemented the BM25 scoring component used by DocPrompting, but **not** it
 ## Repository and submission
 
 Keep these files in the existing project repository: https://github.com/azmatullah93/npm-compatibility-aware-rag. Include `milestone3/`, updated `requirements.txt`, and both `paper/milestone3.tex` and `paper/milestone3.pdf`. Upload the updated research **PDF** to Google Classroom. The repository link is the final line of the abstract.
+
+## Express evaluation harness fix (2026-11-28)
+
+During the first Gemini-generated Express 5.1.0 trial, the researcher observed an initial Docker daemon connection failure, then a `DOCKER_TIMEOUT`, then a trusted manual Docker diagnostic failed with `TypeError: Cannot read properties of null (reading 'port')`. The latter error came from **the test harness** calling `server.address().port` immediately after `app.listen()`, before the asynchronous `'listening'` event. This is **not an LLM failure** and neither trial is a valid Pass@1 observation.
+
+Both Express task specifications now await `once(server, 'listening')`, verify the assigned port, and bound localhost HTTP requests to 5 seconds. The trusted regression check `node milestone3/test_http_spec_contract.cjs` verifies source ordering and native HTTP readiness, but **does not run a model-generated solution**.
+
+After pulling this fix, rerun the **unchanged existing** `milestone3/generated_actual.jsonl` through `--run` (and `--prepare` only if dependencies have gone missing). Record success or failure solely from the fixed harness results. Keep the earlier infrastructure/test failures out of generated-code correctness statistics.
+
+## Pilot20 results and CommonJS export-format sensitivity (2026-11-28)
+
+The researcher completed a genuine **20-generation / 20-Docker-execution pilot** with `gemini-3.5-flash`, four fixed tasks, one response per task per condition, and real pinned npm packages. The original STRICT output contract required `require('./solution.cjs')` to be directly callable. Reported strict successes: no retrieval **3/4**, unfiltered BM25 **4/4**, exact-version BM25 **4/4**, API-range-aware BM25 **3/4**, oracle **3/4** (**17/20** pooled). These are exploratory pilot outcomes, **not** conference-level comparative evidence. The exact per-trial outputs are local, ignored under `milestone3/npm_workspaces/pilot20/`; they were user-run and are not independently reproduced in CI.
+
+All three failed trials were for the Express 5 wildcard task. The no-documentation code registered an invalid `'*'` wildcard, a true API incompatibility. Range and oracle solutions used the correct `'/{*splat}'` Express 5 path, but exported `module.exports = { setup }` rather than a directly callable function. Both CommonJS forms expose `setup`, but the original strict test only accepts `module.exports = setup`. A previous, separately generated range solution passed the strict test with the same prompt and retrieved documents; there was generation variability despite requesting temperature zero.
+
+**Preserve the 17/20 strict results.** An opt-in **sensitivity analysis**, not a retroactive replacement of the primary experiment, can accept either `module.exports = setup` or `module.exports = { setup }`, with no edits to model-generated source. It changes only the trusted test harness:
+
+```bash
+node milestone3/test_export_contract.cjs
+node milestone3/run_generated_code.cjs --generated milestone3/npm_workspaces/pilot20/all_generated.jsonl --run --accept-named-export --output milestone3/npm_workspaces/pilot20/results_named_export.json
+python milestone3/summarize_execution.py milestone3/npm_workspaces/pilot20/results_named_export.json
+```
+
+The alternate mode labels each result with `export_contract: "direct_or_named_setup"`; strict mode uses `"direct_only"`. Keep output filenames distinct. Docker must be running and the pinned npm dependencies already prepared. Do **not** claim any changed success rate until these Docker trials have actually been executed. A future preregistered benchmark should specify an unambiguous export contract and report separate rates for API selection, interface format, and full behavioral correctness. Include old and new package versions, verified docs, repeated generations, and additional models.

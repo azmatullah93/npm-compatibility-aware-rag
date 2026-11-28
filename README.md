@@ -1,5 +1,7 @@
 # Compatibility-Aware Retrieval for Evolving npm APIs
 
+> **Research-stage update (2026-11-27):** Assignment #3 adds a 42-task retrieval benchmark, six paired retrieval conditions, and an IEEE preliminary manuscript. See [milestone3/README.md](milestone3/README.md) and [paper/milestone3.pdf](paper/milestone3.pdf). The next-stage branch adds a GitHub Actions workflow for **real installed-npm API probes** and an isolated generated-code runner. The complete published-baseline reproduction and genuine LLM-generated-code experiments remain pending until independently verified.
+
 ## Latest: Assignment #3 Preliminary Results and Methodology (2026-11-18)
 
 **Azmat Ullah, registration 26i-7841, i267841@isb.nu.edu.pk.**

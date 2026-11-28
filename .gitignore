@@ -16,3 +16,8 @@ milestone3/npm_workspaces/
 milestone3/generated_actual.jsonl
 milestone3/actual_execution_results.json
 milestone3/*.log
+
+# Real npm version probe observations and pinned transitive dependency snapshots
+outputs/npm_version_probe_results.json
+outputs/npm_version_probe_environment.json
+outputs/npm_probe_locks/
