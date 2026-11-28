@@ -7,7 +7,7 @@ This is a **controlled expansion from 4 to 12 executable tasks**, *not* a comple
 From the repository root in Git Bash on Windows:
 
 ```bash
-git pull --ff-only origin research/real-npm-probes-and-llm-runner-2026-11-27
+git pull --ff-only origin research/gemini-cross-version-resume-2026-11-28
 python -m unittest discover -s tests -v
 python -m unittest discover -s milestone3 -p "test_*.py" -v
 python -m unittest discover -s milestone4 -p "test_*.py" -v
@@ -66,6 +66,17 @@ python milestone3/summarize_execution.py milestone3/npm_workspaces/cross_version
 
 The strict summarizer refuses incomplete, missing, duplicate or infrastructure-errored trials. The model is NOT expected to pass all tasks; genuine failures are retained unchanged. The original `pilot20` directory and its 17/20 strict, 19/20 post-hoc sensitivity results remain separate and immutable.
 
-## D. Longer-term conference evaluation
+## D. Independently audit retrieval-only preview (zero API calls)
+
+Only run after preparing `--dry-run` previews for all three modes `unconstrained`, `exact`, and `range`. Their raw files must stay unchanged. The checker requires **exact matching task identities, model IDs, prompt text and retrieved document IDs** relative to the local frozen 39-document dataset.
+
+```bash
+python -m unittest discover -s milestone4 -p "test_*.py" -v
+python milestone4/audit_retrieval.py --directory milestone3/npm_workspaces/retrieval_preview --output milestone3/npm_workspaces/retrieval_preview/audit.json --model gemini-3.5-flash
+```
+
+The report contains per-task retrieval traces, exact source SHA-256 hashes, gold-document recall and counts outside **author-assigned** valid versions. It refuses to overwrite a different existing audit. **It is not model-generated execution accuracy or independent compatibility verification.** For user-observed 2026-11-28 pilot results and limitations see [EXPLORATORY_FINDINGS_2026-11-28.md](EXPLORATORY_FINDINGS_2026-11-28.md).
+
+## E. Longer-term conference evaluation
 
 After the 12-task dry-run, prioritize **authentic versioned documentation**, multiple independently validated npm packages and old/new releases, database-backed Mongoose behaviors, task-level error taxonomy, at least two more model families (OpenAI and Anthropic) with the same held-out tasks, and repeated trials with paired statistics. This pilot is not itself a high-quality conference benchmark.
