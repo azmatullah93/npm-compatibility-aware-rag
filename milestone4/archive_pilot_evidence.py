@@ -23,7 +23,7 @@ BASE = [
  'milestone3/execution_specs.json',
  'milestone3/generate_code.py',
  'milestone3/api_compatibility.py',
- 'milestone3/dense_retrieval.py',
+ 'src/dense_retrieval.py',
  'milestone3/export_contract.cjs',
  'src/retrieval.py',
  'src/metadata.py',
