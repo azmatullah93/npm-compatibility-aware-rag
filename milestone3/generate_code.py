@@ -99,6 +99,42 @@ def describe_quota_error(error):
     return '\n'.join(lines)
 
 
+def describe_forbidden_error(error):
+    """Classify Gemini 403 response safely, without printing credentials or raw messages."""
+    lines=[
+        'HTTP 403: Google refused API access; this is not a model-generation failure.',
+        'Preserved all successful JSONL responses; do not overwrite them.',
+        'Check the selected project status, model entitlement, key restrictions and Google AI Studio billing.',
+    ]
+    try:
+        body=json.loads(error.read(32768).decode('utf-8'))
+        payload=body.get('error') or {}
+        status=payload.get('status')
+        if status in ('PERMISSION_DENIED','UNAUTHENTICATED','FAILED_PRECONDITION'):
+            lines.append('Google error status: '+status)
+        msg=str(payload.get('message','')).lower()
+        if 'project has been denied access' in msg:
+            lines.append('Reason: Google explicitly denied this project access. Check AI Studio project banners and request a review from Google support.')
+        elif 'api_key_service_blocked' in msg or ('requests to this api' in msg and 'blocked' in msg):
+            lines.append('Reason: the API key is not authorized for this Google API. Check the key\'s API restrictions and endpoint.')
+        elif 'billing' in msg or 'payment' in msg:
+            lines.append('Reason: billing or payment restrictions mentioned by Google. Check your project billing settings.')
+        elif 'not supported' in msg or 'not available' in msg or 'model' in msg and 'access' in msg:
+            lines.append('Reason: a model entitlement or availability restriction may apply.')
+        for detail in payload.get('details',[]) or []:
+            if not isinstance(detail,dict):
+                continue
+            reason=(detail.get('reason') or '')
+            if reason in ('API_KEY_SERVICE_BLOCKED','API_KEY_HTTP_REFERRER_BLOCKED',
+                          'API_KEY_IP_ADDRESS_BLOCKED','API_KEY_INVALID',
+                          'SERVICE_DISABLED','CONSUMER_INVALID','ACCESS_TOKEN_SCOPE_INSUFFICIENT'):
+                lines.append('Google detail reason: '+reason)
+    except (OSError,ValueError,UnicodeError,AttributeError,TypeError):
+        pass
+    lines.append('Do not rotate keys or create new projects to bypass an access restriction.')
+    return '\\n'.join(lines)
+
+
 def openai_chat(prompt,model,url,key):
     data=json.dumps({'model':model,'messages':[{'role':'user','content':prompt}], 'temperature':0}).encode()
     req=urllib.request.Request(url.rstrip('/')+'/chat/completions',data=data,
@@ -109,6 +145,8 @@ def openai_chat(prompt,model,url,key):
     except urllib.error.HTTPError as error:
         if error.code == 429:
             raise SystemExit(describe_quota_error(error)) from None
+        if error.code == 403:
+            raise SystemExit(describe_forbidden_error(error)) from None
         raise
     result=body['choices'][0]['message']['content']
     if not isinstance(result,str) or not result.strip():raise ValueError('Empty response')
