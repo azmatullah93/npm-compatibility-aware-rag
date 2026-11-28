@@ -31,9 +31,34 @@ Twelve predefined tasks, retrieved three documents per task and condition. The b
 
 **Validity caveat:** The `valid_versions` labels, `valid_range` annotations, and `correct_doc_id` labels are authored in the same controlled corpus. Range filtering explicitly uses authored validity ranges. Accordingly, **zero invalid hits are partly a construction property, not an external assessment**. Some test cases deliberately use shared old-release documentation where range-aware retrieval should beat an exact-release-tag filter. Metrics should be described as controlled/diagnostic behavior, not independent evidence of a deployable automatic compatibility inference algorithm. Compare to externally verified npm versions and genuine versioned docs in a later benchmark.
 
-## C. Requirements before conference claims
+## C. Independent pinned-release behavior checks (researcher-reported)
 
-1. Preserve raw local generated outputs, retrieval previews, Docker logs, lockfiles and environment metadata; compute SHA-256 hashes. The scripts in this branch can create a reproducible retrieval audit and paired 60-response generation manifest when available.
+On 2026-11-28, the researcher ran `node milestone4/test_release_behavior.cjs`, observing
+**6/6 synthetic checker tests passed**, and then ran
+`node milestone4/probe_release_behavior.cjs` **twice** in the same local
+environment. Both real-package runs reported **26 passed, 0 failed** across
+Express `4.21.2`, Express `5.1.0`, Mongoose `6.13.8`, and Mongoose
+`7.8.7`. The raw local report is
+`milestone3/npm_workspaces/release_behavior_probes.json`. Lockfile hashes
+from both invocations were unchanged:
+
+| Installed package | Recorded SHA-256 of npm lockfile |
+| --- | --- |
+| Express 4.21.2 | `5064bcc7a074b4b7db74edafc30dcc18e0dbd0ee625a1797930624c78b7501e0` |
+| Express 5.1.0 | `80686ec5ef15feb7f22feaa4848b4c2c5fd085a55a04da1bc512b06ef81de978` |
+| Mongoose 6.13.8 | `d148af87e1115c9b1d0df2e03c9f89f993936cbcba1088e1e5429191ee4a6141` |
+| Mongoose 7.8.7 | `2595d8df1eb1afe96bad7a6dc77a7cef111b9593f6e6eba17eee3f8a6bb4b2e2` |
+
+These are **real installed-release, trusted author-written probes**, separate
+from the Gemini generated-code results and author-labeled document recall.
+Checks include HTTP behavior in Express and selected Mongoose public API
+availability/query construction; **no MongoDB server** or full API coverage is
+established. Repeating the same deterministic checks twice is a consistency
+check, not an independent replication.
+
+## D. Requirements before conference claims
+
+1. Preserve raw local generated outputs, retrieval previews, Docker logs, lockfiles and environment metadata; compute SHA-256 hashes. The scripts in this branch can create a reproducible retrieval audit, a **24-execution evidence bundle**, and a paired 60-response generation manifest when the full experiment is available.
 2. Finish all three remaining `exact`, `range`, `oracle` code-generation conditions without substituting models or silent re-generation. Keep primary outcomes separate from post-hoc changes.
 3. Use **authentic traceable documentation** with independent validity testing on real packages; add versions where exact-version docs are available and cases where cross-version reuse is not beneficial.
 4. Add more independent npm packages, realistic tasks, and harder tests including database-backed Mongoose semantics. Prevent exposure to test assertions or gold labels through model prompts.
