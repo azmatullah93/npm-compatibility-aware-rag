@@ -3,6 +3,8 @@
 All API calls are patched. No real network traffic or model tokens are used.
 """
 import json
+import io
+from urllib.error import HTTPError
 import os
 import sys
 import tempfile
@@ -93,6 +95,27 @@ class GenerationResumeTests(unittest.TestCase):
         self.assertEqual(len(rows),2)
         self.assertTrue(all(row['provider']=='prompt_only' for row in rows))
         self.assertTrue(all('code' not in row for row in rows))
+
+    def test_http_429_reports_quota_safely_without_automatic_retry(self):
+        body = {'error': {'status':'RESOURCE_EXHAUSTED','details':[
+            {'@type':'type.googleapis.com/google.rpc.QuotaFailure','violations':[
+                {'quotaId':'GenerateRequestsPerDayPerProjectPerModel-FreeTier',
+                 'quotaMetric':'generativelanguage.googleapis.com/generate_content_free_tier_requests'}]},
+            {'@type':'type.googleapis.com/google.rpc.RetryInfo','retryDelay':'21s'}
+        ]}}
+        error=HTTPError('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+                        429,'Too Many Requests',{'Retry-After':'21'},
+                        io.BytesIO(json.dumps(body).encode('utf-8')))
+        with patch.object(generate_code.urllib.request,'urlopen',side_effect=error) as mock:
+            with self.assertRaises(SystemExit) as raised:
+                generate_code.openai_chat('PROMPT','TEST_MODEL_ONLY',
+                  'https://generativelanguage.googleapis.com/v1beta/openai','NEVER_ECHO_THIS_SECRET')
+        self.assertEqual(mock.call_count,1,'Should not automatically retry quota errors')
+        explanation=str(raised.exception)
+        self.assertIn('HTTP 429',explanation)
+        self.assertIn('GenerateRequestsPerDayPerProjectPerModel-FreeTier',explanation)
+        self.assertIn('21s',explanation)
+        self.assertNotIn('NEVER_ECHO_THIS_SECRET',explanation)
 
 
 if __name__ == '__main__':
