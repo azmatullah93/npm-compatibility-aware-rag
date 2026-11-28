@@ -23,6 +23,13 @@ BASE = [
  'milestone3/execution_specs.json',
  'milestone3/generate_code.py',
  'milestone3/api_compatibility.py',
+ 'milestone3/dense_retrieval.py',
+ 'milestone3/export_contract.cjs',
+ 'src/retrieval.py',
+ 'src/metadata.py',
+ 'milestone4/build_reference_trials.cjs',
+ 'milestone4/test_release_behavior.cjs',
+ 'milestone4/PROTOCOL.md',
  'milestone3/run_generated_code.cjs',
  'milestone3/summarize_execution.py',
  'milestone4/audit_retrieval.py',
@@ -192,13 +199,16 @@ def archive(destination):
     }
     manifest={'created_at_utc':generated,**result,'files':file_hashes}
     destination.parent.mkdir(parents=True,exist_ok=True)
+    created = False
     try:
         with zipfile.ZipFile(destination,mode='x',compression=zipfile.ZIP_DEFLATED) as z:
+            created = True
             for name in sorted(BASE):
                 z.write(ROOT/name,arcname=name)
             z.writestr('EVIDENCE_MANIFEST.json',json.dumps(manifest,indent=2)+'\n')
-    except BaseException:
-        destination.unlink(missing_ok=True)
+    except Exception:
+        if created:
+            destination.unlink(missing_ok=True)
         raise
     return {'path':str(destination),'sha256':sha256(destination.read_bytes()),
             'included_files':len(BASE),'summary':result}
