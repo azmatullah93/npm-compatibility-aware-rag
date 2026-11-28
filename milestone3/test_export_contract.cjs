@@ -33,5 +33,5 @@ assert.equal(compatible(setup),'OK');
 assert.equal(compatible({setup}),'OK');
 assert.throws(()=>compatible({bad:'wrong'}),/Expected a directly exported function or a named setup function/);
 assert.throws(()=>acceptNamedSetupExport('no candidate import'),/Expected exactly one/);
-console.log('PASS: strict export contract preserved and named-export sensitivity adapter verified for 4 tasks');
+console.log('PASS: strict export contract preserved and named-export sensitivity adapter verified for ' + Object.keys(specs).length + ' tasks');
 console.log('(Synthetic test only; no generated code executed.)');
