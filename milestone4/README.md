@@ -40,7 +40,7 @@ for mode in none unconstrained exact range oracle; do
 done
 ```
 
-Free-tier quota may interrupt a batch. Stop on an API error. Each finished response is flushed to disk. The new \`--resume\` flag checks that the saved tasks, model, retrieval setting and prompts are an exact prefix and appends only missing generations. Run the **same command** after the quota clears; do not alter the model or prompt configuration during a partial run. Without \`--resume\`, an existing file is protected from overwrites by default. \`--overwrite\` is an explicit destructive option and must not be used for primary research results.
+Free-tier quota may interrupt a batch. Stop on an API error. Each finished response is flushed to disk. The new `--resume` flag checks that the saved tasks, model, retrieval setting and prompts are an exact prefix and appends only missing generations. Run the **same command** after the quota clears; do not alter the model or prompt configuration during a partial run. Without `--resume`, an existing file is protected from overwrites by default. `--overwrite` is an explicit destructive option and must not be used for primary research results.
 
 ```bash
 wc -l milestone3/npm_workspaces/cross_version12/{none,unconstrained,exact,range,oracle}.jsonl
