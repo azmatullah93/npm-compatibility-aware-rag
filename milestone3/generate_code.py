@@ -132,7 +132,7 @@ def describe_forbidden_error(error):
     except (OSError,ValueError,UnicodeError,AttributeError,TypeError):
         pass
     lines.append('Do not rotate keys or create new projects to bypass an access restriction.')
-    return '\\n'.join(lines)
+    return '\n'.join(lines)
 
 
 def openai_chat(prompt,model,url,key):
