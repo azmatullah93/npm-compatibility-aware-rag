@@ -82,42 +82,99 @@ def openai_chat(prompt,model,url,key):
                'raw_response_content':result,
                'received_at_utc':datetime.now(timezone.utc).isoformat()}
 
-def run(args):
-    tasks=json.loads((HERE/'tasks.json').read_text())
-    docs=json.loads((HERE/'documents.json').read_text())
-    models={'bm25':BM25(docs),'lsa':LSARetriever(docs,dimensions=16)}
-    model_name,mode=args.retriever,args.compatibility
-    model=models[model_name]
-    by_id={t['id']:t for t in tasks}
-    ids=SUITES[args.suite]
+def planned_rows(args, tasks, docs):
+    """Build all expected prompts before any paid API calls; freeze trial identities."""
+    models = {'bm25':BM25(docs), 'lsa':LSARetriever(docs, dimensions=16)}
+    model_name, mode = args.retriever, args.compatibility
+    model = models[model_name]
+    by_id = {t['id']:t for t in tasks}
+    ids = SUITES[args.suite]
     if len(set(ids)) != len(ids) or any(i not in by_id or i not in EXEC_TASKS for i in ids):
         raise ValueError('Missing or duplicate suite task definitions')
     if args.limit is not None and args.limit < 1:
         raise ValueError('--limit must be positive')
-    selected=[by_id[i] for i in ids[:args.limit]]
-    if not args.dry_run and not os.environ.get('OPENAI_API_KEY'):
-        raise SystemExit('OPENAI_API_KEY not set; no LLM generation has been run.')
+    rows = []
+    for tid in ids[:args.limit]:
+        task = by_id[tid]
+        version = resolve_version(task['package'], task['package_json'], task['package_lock'])
+        if mode == 'none':
+            context = []
+        elif mode == 'oracle':
+            context = [next(d for d in docs if d['id'] == task['correct_doc_id'])]
+        else:
+            hits = rank_for_version(model, task['query'], task['package'], version, mode, k=3)
+            context = [d for d, _ in hits]
+        rows.append({
+            'task_id':tid, 'package':task['package'], 'target_version':version,
+            'method':f'{model_name}_{mode}', 'retrieved_ids':[d['id'] for d in context],
+            'model':args.model, 'prompt':prompt_for(task, context),
+            'provider':'prompt_only' if args.dry_run else 'openai_compatible_chat_api',
+            'suite':args.suite, 'temperature_requested':0
+        })
+    return rows
+
+
+def load_resume_rows(path, planned, dry_run):
+    """Reject stale, corrupt or non-prefix trials; never silently change a result."""
+    if not path.exists():
+        return []
+    existing = []
+    for lineno, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+        if not line.strip():
+            raise ValueError(f'Blank row in existing JSONL at line {lineno}; refusing unsafe resume')
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as error:
+            raise ValueError(f'Corrupt JSONL row {lineno}; fix from a backup, not regeneration') from error
+        if not isinstance(row, dict) or len(existing) >= len(planned):
+            raise ValueError('Existing file contains unexpected trials; refusing unsafe resume')
+        expected = planned[len(existing)]
+        for key, value in expected.items():
+            if row.get(key) != value:
+                raise ValueError(f'Resume mismatch line {lineno}, field {key}; refusing to overwrite or mix experiments')
+        if not dry_run and (not isinstance(row.get('code'), str) or not row['code'].strip()):
+            raise ValueError(f'Missing genuine code on existing line {lineno}; refusing unsafe resume')
+        existing.append(row)
+    return existing
+
+
+def run(args):
+    tasks=json.loads((HERE/'tasks.json').read_text(encoding='utf-8'))
+    docs=json.loads((HERE/'documents.json').read_text(encoding='utf-8'))
+    planned=planned_rows(args,tasks,docs)
     path=Path(args.output)
     path.parent.mkdir(parents=True,exist_ok=True)
-    with path.open('w') as f:
-        for t in selected:
-            ver=resolve_version(t['package'],t['package_json'],t['package_lock'])
-            if mode=='none':
-                context=[]
-            elif mode=='oracle':
-                context=[next(d for d in docs if d['id']==t['correct_doc_id'])]
-            else:
-                hits=rank_for_version(model,t['query'],t['package'],ver,mode,k=3)
-                context=[d for d,_ in hits]
-            prompt=prompt_for(t,context)
-            row={'task_id':t['id'],'package':t['package'],'target_version':ver,'method':f'{model_name}_{mode}',
-                 'retrieved_ids':[d['id'] for d in context], 'model':args.model,'prompt':prompt,
-                 'provider':'prompt_only' if args.dry_run else 'openai_compatible_chat_api',
-                 'suite':args.suite, 'temperature_requested':0}
+    if args.resume and args.overwrite:
+        raise ValueError('Use either --resume or --overwrite, never both')
+    if args.resume:
+        existing=load_resume_rows(path,planned,args.dry_run)
+        file_mode='a'
+    elif args.overwrite:
+        existing=[]
+        file_mode='w'
+    else:
+        existing=[]
+        file_mode='x' # default: fail if an output exists rather than destroy research data
+
+    remaining=planned[len(existing):]
+    if remaining and not args.dry_run and not os.environ.get('OPENAI_API_KEY'):
+        raise SystemExit('OPENAI_API_KEY not set; no new LLM generation has been run.')
+    if not remaining:
+        print(f'Already complete: {len(existing)}/{len(planned)} responses in {path}; no new API calls')
+        return
+
+    with path.open(file_mode,encoding='utf-8') as f:
+        for row in remaining:
+            row=row.copy()
             if not args.dry_run:
-                row['code'],row['generation_response']=openai_chat(prompt,args.model,args.api_url,os.environ['OPENAI_API_KEY'])
+                row['code'],row['generation_response']=openai_chat(
+                    row['prompt'],args.model,args.api_url,os.environ['OPENAI_API_KEY'])
             f.write(json.dumps(row)+'\n')
-    print(f"Wrote {len(selected)} {'prompts only' if args.dry_run else 'genuine API responses'} to {path}")
+            f.flush()
+            os.fsync(f.fileno())
+    print(f'Completed {len(planned)}/{len(planned)} '
+          f'{"prompts only" if args.dry_run else "genuine API responses"} at {path} '
+          f'({len(existing)} reused, {len(remaining)} new)')
 
 if __name__=='__main__':
     p=argparse.ArgumentParser()
@@ -128,5 +185,7 @@ if __name__=='__main__':
     p.add_argument('--suite',choices=sorted(SUITES),default='pilot4')
     p.add_argument('--limit',type=int,default=None)
     p.add_argument('--dry-run',action='store_true')
+    p.add_argument('--resume',action='store_true',help='Append only missing trials after verifying previously saved rows')
+    p.add_argument('--overwrite',action='store_true',help='Explicitly replace a previously created output (not for research runs)')
     p.add_argument('--output',default=str(HERE/'prompts_dry_run.jsonl'))
     run(p.parse_args())
