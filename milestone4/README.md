@@ -114,6 +114,36 @@ LLM executable-code accuracy. For source context see the official
 [Express 5 migration guide](https://expressjs.com/en/guide/migrating-5/) and
 [Mongoose 7 migration guide](https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html).
 
-## F. Longer-term conference evaluation
+## F. Archive the partial 24-execution experiment (zero API calls)
+
+The first two methods were both successfully executed by the researcher on 2026-11-28.
+**Back up their original raw evidence immediately**, independently of completing the
+other three methods. From the repo root, after generating the retrieval audit and
+release behavior probe:
+
+```bash
+python -m unittest discover -s milestone4 -p "test_*.py" -v
+python milestone4/archive_pilot_evidence.py --check-only
+python milestone4/archive_pilot_evidence.py
+```
+
+The archive script validates all 24 model responses against task IDs, versions,
+original per-condition JSONL, actual Docker result status, accepted export contract,
+and generated-code SHA-256; checks the retrieval audit against original corpus
+and preview hashes; and checks all 26 real-package probes and their four exact
+npm lockfile hashes. The local ZIP embeds an evidence manifest and does not
+overwrite an existing archive.
+
+Output: `milestone3/npm_workspaces/archives/gemini_pilot_evidence_2026-11-28.zip`.
+**Keep a separate local backup** (e.g. on an external drive) so that ignored npm
+workspaces do not disappear during repo cleanups. The ZIP includes raw model
+outputs, prompts, and source files: **inspect it for sensitive data before
+sharing**. It does **not** include all `node_modules` trees, the external API
+project configuration, Google quota state or a MongoDB service and is therefore
+a portable evidence snapshot, not a fully self-contained environment image.
+The three ungenerated methods remain unfilled; this archive contains no
+fabricated or imputed LLM results.
+
+## G. Longer-term conference evaluation
 
 After the 12-task dry-run, prioritize **authentic versioned documentation**, multiple independently validated npm packages and old/new releases, database-backed Mongoose behaviors, task-level error taxonomy, at least two more model families (OpenAI and Anthropic) with the same held-out tasks, and repeated trials with paired statistics. This pilot is not itself a high-quality conference benchmark.
