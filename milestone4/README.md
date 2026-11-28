@@ -77,6 +77,43 @@ python milestone4/audit_retrieval.py --directory milestone3/npm_workspaces/retri
 
 The report contains per-task retrieval traces, exact source SHA-256 hashes, gold-document recall and counts outside **author-assigned** valid versions. It refuses to overwrite a different existing audit. **It is not model-generated execution accuracy or independent compatibility verification.** For user-observed 2026-11-28 pilot results and limitations see [EXPLORATORY_FINDINGS_2026-11-28.md](EXPLORATORY_FINDINGS_2026-11-28.md).
 
-## E. Longer-term conference evaluation
+## E. Independent installed-release API probes (zero Gemini calls)
+
+After the 12 human-authored reference programs pass and the exact npm versions are
+installed locally, run the following **trusted author-written** capability checks:
+
+```bash
+node --check milestone4/probe_release_behavior.cjs
+node milestone4/test_release_behavior.cjs
+node milestone4/probe_release_behavior.cjs
+```
+
+The probe imports the four pinned releases from the same local prepared npm
+workspaces: Express `4.21.2` / `5.1.0` and Mongoose `6.13.8` / `7.8.7`.
+It uses real HTTP requests to check Express old/new wildcard routes and the
+stable `/health` route; verifies removed `app.del`, Mongoose `Model.remove`
+and `Model.update` availability; checks the presence of `Model.findById`,
+`deleteMany`, `updateOne`, and the behavior of ObjectId construction.
+Each old/new release is checked for **both positive and negative controls**.
+The tool neither imports any model-generated solution nor uses any source labels
+from the retrieval corpus. Expected summary is **26/26 capability checks passed**;
+this expectation is NOT a measured result until a real run succeeds.
+
+Raw observation record (environment, exact versions, lockfile hashes, individual
+observed values, explicit expectations, source URLs) is saved to
+`milestone3/npm_workspaces/release_behavior_probes.json`; a previous differing
+record is archived in `release_behavior_probe_history/` before replacement.
+Do not commit or leak any secrets in captured environment data.
+
+**Limits:** This independently probes behavior in **four exact installed npm
+releases**, not every version covered by the author's `valid_range` labels;
+Mongoose assertions do not connect to MongoDB or validate database persistence;
+the capability cases are a deliberately curated subset of the much broader npm
+API surface. Record this evidence separately from retrieval-label accuracy and
+LLM executable-code accuracy. For source context see the official
+[Express 5 migration guide](https://expressjs.com/en/guide/migrating-5/) and
+[Mongoose 7 migration guide](https://mongoosejs.com/docs/7.x/docs/migrating_to_7.html).
+
+## F. Longer-term conference evaluation
 
 After the 12-task dry-run, prioritize **authentic versioned documentation**, multiple independently validated npm packages and old/new releases, database-backed Mongoose behaviors, task-level error taxonomy, at least two more model families (OpenAI and Anthropic) with the same held-out tasks, and repeated trials with paired statistics. This pilot is not itself a high-quality conference benchmark.
