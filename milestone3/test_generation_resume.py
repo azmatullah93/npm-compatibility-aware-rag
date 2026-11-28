@@ -133,7 +133,7 @@ class GenerationResumeTests(unittest.TestCase):
         self.assertIn('HTTP 403',message)
         self.assertIn('denied this project access',message)
         self.assertNotIn('DO_NOT_PRINT_THIS_KEY',message)
-        self.assertIn('\\n',message)
+        self.assertIn('\n',message)
 
 
 if __name__ == '__main__':
