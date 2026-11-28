@@ -34,6 +34,8 @@ BASE = [
  'milestone3/summarize_execution.py',
  'milestone4/audit_retrieval.py',
  'milestone4/probe_release_behavior.cjs',
+ 'milestone4/archive_pilot_evidence.py',
+ 'milestone4/test_archive_pilot_evidence.py',
  'milestone4/EXPLORATORY_FINDINGS_2026-11-28.md',
  'milestone3/npm_workspaces/cross_version12/none.jsonl',
  'milestone3/npm_workspaces/cross_version12/unconstrained.jsonl',
