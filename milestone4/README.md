@@ -40,6 +40,14 @@ for mode in none unconstrained exact range oracle; do
 done
 ```
 
+If the API returns HTTP 429, **stop generation immediately**. Look at [AI Studio rate limits](https://aistudio.google.com/rate-limit) for the exact project/model RPM, TPM and RPD limits. The code now prints any supplied quota ID, metric and retry hint without displaying the key. A per-minute limit may clear with time; a per-day limit resets according to Google quota policy (normally midnight Pacific). Do not work around a per-project limit by creating additional API keys in the same project or silently switching models midway through a paired experiment.
+
+To inspect any successfully saved partial conditions without trying another API call:
+
+```bash
+python -c "from pathlib import Path; d=Path('milestone3/npm_workspaces/cross_version12'); [(print(m, sum(1 for line in (d/(m+'.jsonl')).open(encoding='utf-8') if line.strip()) if (d/(m+'.jsonl')).exists() else 0)) for m in ['none','unconstrained','exact','range','oracle']]"
+```
+
 Free-tier quota may interrupt a batch. Stop on an API error. Each finished response is flushed to disk. The new `--resume` flag checks that the saved tasks, model, retrieval setting and prompts are an exact prefix and appends only missing generations. Run the **same command** after the quota clears; do not alter the model or prompt configuration during a partial run. Without `--resume`, an existing file is protected from overwrites by default. `--overwrite` is an explicit destructive option and must not be used for primary research results.
 
 ```bash
